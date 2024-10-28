@@ -56,6 +56,21 @@ public class UserInterface {
     }
 
     private void processAddVehicleRequest() {
+        //get lots of values from the user...
+        int vin = Console.PromptForInt("Enter Vin: ");
+        int year = Console.PromptForInt("Enter year: ");
+        String make = Console.PromptForString("Enter make: ");
+        String model = Console.PromptForString("Enter model: ");
+        String vehicleType = Console.PromptForString("Enter vehicle type: ");
+        String color = Console.PromptForString("Enter color:  ");
+        int odometer = Console.PromptForInt("Enter odometer: ");
+        double price = Console.PromptForDouble("Enter price: ");
+
+        Vehicle v = new Vehicle(vin,year, make, model, vehicleType, color, odometer, price);
+
+        currentDealership.addVehicleToInventory(v);
+        DealershipFileManager.saveToCSV(currentDealership, filename);
+
     }
 
     private void processGetByVehicleTypeRequest() {
@@ -74,6 +89,11 @@ public class UserInterface {
     }
 
     private void processGetByPriceRequest() {
+        double min = Console.PromptForDouble("Enter min: ");
+        double max = Console.PromptForDouble("Enter max: ");
+        for(Vehicle v : currentDealership.getVehiclesByPrice(min, max)){
+            displayVehicle(v);
+        }
     }
 
 

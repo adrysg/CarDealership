@@ -53,5 +53,18 @@ public class Dealership {
 
     }
 
+    public ArrayList<Vehicle> getVehiclesByPrice(double min, double max){
+        ArrayList<Vehicle> result = new ArrayList<Vehicle>();
+        for(Vehicle v : this.inventory){
+            if(v.getPrice() >= min && v.getPrice() <= max){
+                result.add(v);
+            }
+        }
+        return result;
+    }
 
+
+    public ArrayList<Vehicle> getAllVehicles() {
+        return this.inventory;
+    }
 }
