@@ -1,9 +1,12 @@
 package com.pluralsight;
 
+import java.util.ArrayList;
+
 public class UserInterface {
 
-    public static String filename = "inventory.csv";
+    public static final String filename = "inventory.csv";
     public Dealership currentDealership;
+
 
     public UserInterface(){
         currentDealership = DealershipFileManager.getFromCSV(filename);
@@ -24,7 +27,6 @@ public class UserInterface {
                 8 - Add a vehicle
                 9 - Remove a vehicle
                 99 - Quit
-
                 >>>\s""";
 
         int selection;
@@ -48,11 +50,20 @@ public class UserInterface {
             }
         } while (selection != 99);
 
-
-
     }
 
     private void processRemoveVehicleRequest() {
+        System.out.println("What is the vehicle's Vin #: ");
+        int vin = Console.PromptForInt("Vin #: ");
+
+        for (Vehicle v : currentDealership.getInventory()) {
+
+            if (v.getVin() == vin) {
+                currentDealership.removeVehicleFromInventory(v);
+            }
+        }
+
+        DealershipFileManager.saveToCSV(currentDealership,filename);
     }
 
     private void processAddVehicleRequest() {
@@ -74,38 +85,59 @@ public class UserInterface {
     }
 
     private void processGetByVehicleTypeRequest() {
+        String type = Console.PromptForString("Enter Vehicle Type:  ").toLowerCase();
+       displayVehicles(currentDealership.getVehiclesByType(type));
+
     }
 
     private void processGetByMileageRequest() {
+        int min = Console.PromptForInt("Min Mileage:  ");
+        int max = Console.PromptForInt("Max Mileage: ");
+
+        displayVehicles(currentDealership.getVehiclesByMileage(min, max));
+
+
     }
 
     private void processGetByColorRequest() {
+        String color = Console.PromptForString("Enter Color: ");
+
+        displayVehicles(currentDealership.getVehiclesByColor(color));
+
     }
 
     private void processGetByYearRequest() {
+        int min = Console.PromptForInt("Min Year:  ");
+        int max = Console.PromptForInt("Max Year: ");
+
+        displayVehicles(currentDealership.getVehiclesByYear(min, max));
+
+
     }
 
     private void processGetByMakeModelRequest() {
+        String make = Console.PromptForString("Make of vehicle: ");
+        String model = Console.PromptForString("Model of vehicle");
+
+        displayVehicles(currentDealership.getVehiclesByMakeModel(make, model));
+
     }
 
     private void processGetByPriceRequest() {
         double min = Console.PromptForDouble("Enter min: ");
         double max = Console.PromptForDouble("Enter max: ");
-        for(Vehicle v : currentDealership.getVehiclesByPrice(min, max)){
-            displayVehicle(v);
-        }
-    }
 
+        displayVehicles(currentDealership.getVehiclesByPrice(min, max));
+
+    }
 
     public void processGetAllVehiclesRequest(){
-        for(Vehicle v : currentDealership.getInventory()){
-            displayVehicle(v);
-        }
+        displayVehicles(currentDealership.getAllVehicles());
     }
 
-    public void displayVehicle(Vehicle v){
-        System.out.println(v);
-    }
 
+    public void displayVehicles(ArrayList<Vehicle> vehicles){
+        System.out.println(vehicles);
+    }
 
 }
