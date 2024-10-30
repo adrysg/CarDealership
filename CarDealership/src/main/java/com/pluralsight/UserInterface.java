@@ -137,7 +137,10 @@ public class UserInterface {
 
 
     public void displayVehicles(ArrayList<Vehicle> vehicles){
-        System.out.println(vehicles);
+        for(Vehicle vehicle : vehicles){
+            System.out.println(vehicle.toString());
+        }
+
     }
 
 }
