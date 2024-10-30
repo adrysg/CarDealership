@@ -13,3 +13,7 @@ if by any chance the user misses any information, the application will automatic
 ![image](https://github.com/user-attachments/assets/7831d647-661e-4064-affe-7405d67ed940)
 
 the overall goal of this application is to be able to show inventory for different dealerships although right now I am only working with one.
+
+I specifically found this piece of code interesting because I reused it many times and just modified it to show whatever I needed it to show. 
+
+" displayVehicles(currentDealership. "
